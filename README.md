@@ -1,3 +1,44 @@
+
+# rstudio-FIELDimageR
+
+FIELDimageR in a RStudio container with `verse` dependencies, based on [Vice RStudio Docker container](https://hub.docker.com/r/cyversevice/rstudio-verse) for CyVerse VICE.
+
+# Docker Instructions
+
+## Run this Docker locally or on a Virtual Machine
+
+To run these containers, you must first pull them from DockerHub.
+
+```
+docker pull agdrone/cyverse_fieldimager:latest
+```
+
+```
+docker run --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://localhost:8787 agdrone/cyverse_fieldimager:latest
+```
+
+The default username is `rstudio` and password is `rstudio1`.
+To reset the password, add the flag `-e PASSWORD=<yourpassword>` in the `docker run` statement (replacing <yourpassword> with the actual password).
+
+## Build your own Docker container and deploy on CyVerse VICE
+
+This container is intended to run on the CyVerse data science workbench, called [VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
+
+###### Developer notes
+
+To build your own container with a Dockerfile and additional dependencies, pull the pre-built image from DockerHub:
+
+```
+FROM agdrone/cyverse_fieldimager:latest
+```
+
+Follow the instructions in the [VICE manual for integrating your own tools and apps](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/developer_guide/building.html).
+
+# Running the VICE app
+If running the docker image on VICE, the default username is `rstudio` and password is `rstudio1`.
+
+Additional information is available in the CyVerse [RStudio Quick Start](https://learning.cyverse.org/projects/vice/en/latest/user_guide/quick-rstudio.html) documentation. 
+
 # Generating Plot GeoJSON File
 This document describes how to use [FIELDimageR](https://github.com/OpenDroneMap/FIELDimageR) to generate a Plot boundary [GeoJSON](https://datatracker.ietf.org/doc/rfc7946/?include_text=1) file.
 
