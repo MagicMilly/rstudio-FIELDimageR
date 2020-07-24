@@ -129,5 +129,6 @@ latlon_shape<-spTransform(EX1.Shape$fieldShape, latlon_crs)
 Write JSON to the file.
 ```R
 json<-geojson_json(latlon_shape)
-geojson_write(json, geometry="polygon", file="plots.json")
+save_json<-gsub('fieldID', 'id', json)
+geojson_write(save_json, geometry="polygon", file="plots.json")
 ```
