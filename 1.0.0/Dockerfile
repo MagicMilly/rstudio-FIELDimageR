@@ -7,7 +7,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfftw3-dev \
     gdal-bin \
     libgdal-dev \
-    libxt-dev
+    libxt-dev \
+    libudunits2-dev \
+    libprotobuf-dev \
+    protobuf-compiler \
+    libjq-dev \
+    libnode-dev
 
 RUN install2.r --error \
     sp \
@@ -18,6 +23,14 @@ RUN install2.r --error \
     git2r \
     usethis \
     fftwtools \
-    devtools
+    devtools \
+    units \
+    protolite \
+    jqr \
+    sf \
+    V8 \
+    geojson \
+    geojsonlint \
+    geojsonio
 
 RUN installGithub.r filipematias23/FIELDimageR

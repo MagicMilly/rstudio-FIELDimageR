@@ -64,6 +64,16 @@ The steps used here are a non-consecutive subset of those available with FIELDim
 We are using an example source image named `EX1_RGB.tif`.
 You can substitute the name of any georeferenced image file you'd like.
 
+**Specify libraries needed**
+
+Load the needed libraries
+```R
+library(FIELDimageR)
+library(raster)
+library(geojsonio)
+library(stringi)
+```
+
 **Load the image**
 
 Load the source image with the following command.
@@ -110,32 +120,14 @@ EX1.Shape<-fieldShape(mosaic = EX1.Rotated, ncols = 14, nrows = 9)
 ## Generate GeoJSON file <a name="generate" />
 The following code takes the plot boundaries produced in the [Preparation](#preparation) section above and writes the GeoJSON to a file named 'plots.json'.
 
+Ensure coordinate system of polygons is in the expected Lat-Long WGS84 (EPSG 4326).
 ```R
 latlon_crs<-crs('+proj=longlat +datum=WGS84 +no_defs')
 latlon_shape<-spTransform(EX1.Shape$fieldShape, latlon_crs)
+```
 
-multi_polys<-attr(latlon_shape, 'polygons')
-json<-'{"type": "FeatureCollection", "name": "FIELDimageR", "features": ['
-npolys<-length(multi_polys)
-separator<-''
-for (i in 1:npolys) {
-  poly<-multi_polys[[i]]
-  polys<-attr(poly, 'Polygons')
-  coords<-coordinates(polys[[1]])
-  ncoords<-dim(coords)[[1]]
-  json<-paste(json, separator, '{"type": "Feature", "properties": { "id": "', c(i), '", "observationUnitName":"', c(i), '"}, "geometry": { "type": "Polygon", "coordinates": [ [ ')
-  coord_separator<-''
-  for (c in 1:ncoords) {
-    json<-paste(json, coord_separator, "[", coords[c, 1], ",", coords[c, 2], "]")
-    coord_separator<-', '
-  }
-  json<-paste(json, "] ] } }")
-  separator<-', '
-}
-json<-paste(json, ']}')
-
-
-fileConn<-file("plots.json")
-writeLines(json,fileConn)
-close(fileConn)
+Write JSON to the file.
+```R
+json<-geojson_json(latlon_shape)
+geojson_write(json, geometry="polygon", file="plots.json")
 ```
