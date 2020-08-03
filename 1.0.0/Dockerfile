@@ -33,4 +33,5 @@ RUN install2.r --error \
     geojsonlint \
     geojsonio
 
+RUN installGithub.r ropensci/geojsonio
 RUN installGithub.r filipematias23/FIELDimageR
