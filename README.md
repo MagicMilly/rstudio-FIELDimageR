@@ -1,5 +1,5 @@
 
-# rstudio-FIELDimageR
+# RStudio-FIELDimageR
 
 FIELDimageR in a RStudio container with `VICE` dependencies, based on [Vice RStudio Docker container](https://hub.docker.com/r/cyversevice/rstudio-verse) for CyVerse VICE.
 
