@@ -4,6 +4,7 @@
 FIELDimageR in a RStudio container with `VICE` dependencies, based on [Vice RStudio Docker container](https://hub.docker.com/r/cyversevice/rstudio-verse) for CyVerse VICE.
 
 ## Overview
+
 The original documentation for [FIELDimageR](https://github.com/OpenDroneMap/FIELDimageR) provides information on its capabilities.
 
 This documentation is for writing [GeoJSON](https://datatracker.ietf.org/doc/rfc7946/?include_text=1) plot files by leveraging the functionality inherent in FIELDimageR.
@@ -14,6 +15,7 @@ Refer to the [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) instructi
 The instructions starting with the [preparation step](#preparation) onward can be used with this image.
 
 # Quick Start
+
 Use the following steps to quickly get started with the CyVerse app:
 1. Log into [CyVerse](https://de.cyverse.org/de/) Discovery Environment
 2. Click on the Apps tile to open the `Apps` window
@@ -42,10 +44,12 @@ docker run --rm -v /$HOME:/app --workdir /app -p 8787:80 -e REDIRECT_URL=http://
 ```
 
 #### Local Credentials
+
 The default username is `rstudio` and password is `rstudio1`.
 To reset the password, add the flag `-e PASSWORD=<yourpassword>` in the `docker run` statement (replacing \<yourpassword\> with the actual password).
 
 ## Build your own Docker container and deploy on CyVerse VICE
+
 A pre-built container is available on [DockerHub](https://hub.docker.com/repository/docker/agdrone/cyverse_fieldimager).
 
 The built container is intended to run on the CyVerse data science workbench, called [VICE](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/index.html). 
@@ -79,9 +83,11 @@ docker push agdrone/cyverse_fieldimager:1.0
 Follow the instructions in the [VICE manual for integrating your own tools and apps](https://cyverse-visual-interactive-computing-environment.readthedocs-hosted.com/en/latest/developer_guide/building.html).
 
 # Running the VICE app <a name="vice"/>
+
 Additional information is available in the CyVerse [RStudio Quick Start](https://learning.cyverse.org/projects/vice/en/latest/user_guide/quick-rstudio.html) documentation. 
 
 #### VICE Credentials
+
 If running the docker image on VICE, the default username is `rstudio` and password is `rstudio1`.
 
 # Generating Plot GeoJSON File
@@ -94,6 +100,7 @@ We will only be referencing the minimum steps needed for generating the GeoJSON 
 There is additional functionality available with FIELDimageR.
 
 ## Preparation Steps <a name="preparation" />
+
 This section lists the steps needed to define the plot boundaries ([saving the plot geometries](#generate) follows).
 
 <hr />
@@ -163,6 +170,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.Rotated, ncols = 14, nrows = 9)
 ```
 
 ## Generate GeoJSON file <a name="generate" />
+
 The following code takes the plot boundaries produced in the [Preparation](#preparation) section above and writes the GeoJSON to a file named 'plots.json'.
 
 Ensure coordinate system of polygons is in the expected Lat-Long WGS84 (EPSG 4326).
@@ -176,4 +184,13 @@ Generate and write the JSON:
 json<-geojson_json(latlon_shape)
 save_json<-gsub('fieldID', 'id', json)
 geojson_write(save_json, geometry="polygon", file="plots.json", precision=9)
+```
+
+## Save the Rotated Image
+
+The plot boundaries generated are for the rotated image that they were created on.
+For plot boundary-to-image mapping to be correct, the rotated image needs to be saved.
+The following command saves the rotated image:
+```R
+writeRaster(EX1.Rotated, "EX1_RGB_rotated.tif", overwrite=TRUE, datatype='INT1U', format='GTiff')
 ```
