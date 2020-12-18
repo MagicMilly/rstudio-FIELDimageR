@@ -3,16 +3,18 @@
 
 FIELDimageR in a RStudio container with `VICE` dependencies, based on [Vice RStudio Docker container](https://hub.docker.com/r/cyversevice/rstudio-verse) for CyVerse VICE.
 
+These instructions will cover how to use the CyVerse VICE app, which does not require installing any software on your local machine. This is the recommended method for generating GEOJson plot files for most users. For developers who are familiar with Docker and RStudio and are interested in contributing to the pipeline and/or writing custom algorithms, skip to the [Development](#development) section. 
+
 ## Overview
 
 The original documentation for [FIELDimageR](https://github.com/OpenDroneMap/FIELDimageR) provides information on its capabilities.
 
 This documentation is for writing [GeoJSON](https://datatracker.ietf.org/doc/rfc7946/?include_text=1) plot files by leveraging the functionality inherent in FIELDimageR.
-If you have access to an existing VICE app you can skip ahead to that [section](#vice);
 
 There is a non-CyVerse Docker image available named [agdrone/fieldimager](https://hub.docker.com/repository/docker/agdrone/fieldimager).
 Refer to the [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) instructions for running this Docker image.
-The instructions starting with the [preparation step](#preparation) onward can be used with this image.
+
+## Prerequisites 
 
 # Quick Start
 
@@ -28,6 +30,8 @@ Use the following steps to quickly get started with the CyVerse app:
 9. Log into CyVerse with your credentials
 10. Log into the RStudio instance using the username `rstudio` and password `rstudio1` credentials
 11. Follow the instructions in the [preparation step](#preparation) to generate the plot GeoJSON file
+
+# Development <a name="development"/>
 
 # Docker Instructions
 
